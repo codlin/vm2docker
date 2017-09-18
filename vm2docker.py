@@ -30,7 +30,7 @@ class VM2Docker(object):
             logger.error("tar / failed. please check your vm guest whether has enough disk space left.")
             sys.exit(1)
 
-        self.vm.cpfilefromguest("/img.tar", docker_dir)
-        if not os.path.exists("{}/img.tar".format(docker_dir)):
-            logger.error("get img.tar from vm guest failed.")
+        self.vm.cpfilefromguest("/docker2vm_img.tar", docker_dir)
+        if not os.path.exists("{}/docker2vm_img.tar".format(docker_dir)):
+            logger.error("get docker2vm_img.tar from vm guest failed.")
             sys.exit(1)
