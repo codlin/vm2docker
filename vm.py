@@ -13,7 +13,7 @@ class VMWare(object):
         vmx: the VMX path for VMWare images
         '''
         self.vmx = vmx
-        if no os.path.exists(vmx):
+        if not os.path.exists(vmx):
             raise IOError("vmx path {} doesn't exist.".format(vmx))
             sys.exit(1)
         
