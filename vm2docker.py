@@ -24,6 +24,7 @@ class VM2Docker(object):
         self._getimg()
         cmd = pexpect.spawn("cd {}".format(docker_dir))
         cmd.logfile = sys.stdout
+        cmd.sendline("ls -l")
         cmd.sendline("docker build -t {} .".format(imgname))
         cmd.expect("# ")
     
