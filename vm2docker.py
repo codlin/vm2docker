@@ -18,6 +18,9 @@ class VM2Docker(object):
             self.vm.stop()
         
     def run(self, imgname='vm2docker:raw'):
+        if imgname is None or imgname == '':
+            imgname = 'vm2docker:raw'
+
         self._getimg()
         cmd = pexpect.spawn("cd {}".format(docker_dir))
         cmd.logfile = sys.stdout
