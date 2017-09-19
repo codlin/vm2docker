@@ -12,6 +12,11 @@ class VM2Docker(object):
     def __init__(self, vmx, vmuser, vmpasswd):
         self.vm = VMWare(vmx, vmuser, vmpasswd)
     
+    def __del__(self):
+        if isinstance(self.vm, VMWare):
+            logger.info("stop vmware guest: {}".format(self.vm.vmx))
+            self.vm.stop()
+        
     def run(self, imgname='vm2docker:raw'):
         self._getimg()
         cmd = pexpect.spawn("cd {}".format(docker_dir))
