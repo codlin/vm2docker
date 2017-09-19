@@ -22,7 +22,11 @@ class VMWare(object):
     
     def start(self):
         cmd = "vmrun -T ws start {} nogui".format(self.vmx)
-        run(cmd)
+        res = run(cmd)
+        if 'Error' in res:
+            logger.critical("start vm guest failed, exit.")
+            sys.exit(1)
+            
         logger.info("wait a while for VM starting...")
         time.sleep(180)
 
