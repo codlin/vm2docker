@@ -1,2 +1,2 @@
 FROM scratch
-ADD img.tar /
+ADD docker2vm_img.tar /
