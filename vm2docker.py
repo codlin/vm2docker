@@ -20,17 +20,17 @@ class VM2Docker(object):
     def run(self, imgname='vm2docker:raw'):
         if imgname is None or imgname == '':
             imgname = 'vm2docker:raw'
+        
+        self.vm.start()
 
         self._getimg()
         cmd = pexpect.spawn("cd {}".format(docker_dir))
         cmd.logfile = sys.stdout
         cmd.sendline("ls -l")
         cmd.sendline("docker build -t {} .".format(imgname))
-        cmd.expect("# ")
+        #cmd.expect("# ")
     
     def _getimg(self):
-        self.vm.start()
-
         tar = os.path.join(scripts_dir, "tar.sh")
         os.chmod(tar, stat.S_IXGRP)
         self.vm.cpfiletoguest(tar, "/tar.sh")
