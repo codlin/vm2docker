@@ -1,8 +1,8 @@
 import os
 import sys
 import stat
-import pexpect
 from vm import *
+from helper import *
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 docker_dir = os.path.join(root_dir, "dockerfiles")
@@ -24,11 +24,9 @@ class VM2Docker(object):
         self.vm.start()
 
         self._getimg()
-        cmd = pexpect.spawn("cd {}".format(docker_dir))
-        cmd.logfile = sys.stdout
-        cmd.sendline("ls -l")
-        cmd.sendline("docker build -t {} .".format(imgname))
-        #cmd.expect("# ")
+
+        cmd = "docker build -t {} {} ".format(imgname, "dockerfiles")
+        run(cmd)
     
     def _getimg(self):
         tar = os.path.join(scripts_dir, "tar.sh")
