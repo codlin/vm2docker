@@ -1,5 +1,4 @@
 import sys
-from config import *
 from vm2docker import *
 
 dockerimg = sys.argv[1]
