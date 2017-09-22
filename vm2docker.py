@@ -9,7 +9,8 @@ docker_dir = os.path.join(root_dir, "dockerfiles")
 scripts_dir = os.path.join(root_dir, "scripts")
 
 class VM2Docker(object):
-    def __init__(self, vmx, vmuser, vmpasswd):
+    def __init__(self, vfile, vmuser, vmpasswd):
+        vmx = self._convertvftovmx(vfile)
         self.vm = VMWare(vmx, vmuser, vmpasswd)
     
     def __del__(self):
@@ -41,3 +42,16 @@ class VM2Docker(object):
         if not os.path.exists("{}/docker2vm_img.tar".format(docker_dir)):
             logger.error("get docker2vm_img.tar from vm guest failed.")
             sys.exit(1)
+    
+    def _convertvftovmx(self, vfile):
+        file, suffix = os.path.splitext(vfile)
+        if suffix not in ['.ova', '.ovf', '.vmx']:
+            raise TypeError("Unsupport VM type {}.".format(file))
+            sys.exit(1)
+        
+        vmx = "{}.vmx".format(file)
+        if suffix != '.vmx':
+            cmd = "ovftool -tt=VMX {} {}".format(vfile, vmx)
+            run(cmd)
+        
+        return vmx
