@@ -49,7 +49,7 @@ class VM2Docker(object):
             raise TypeError("Unsupport VM type {}.".format(file))
             sys.exit(1)
         
-        vmx = "{}.vmx".format(file)
+        vmx = "{}_new.vmx".format(file)
         if suffix != '.vmx':
             cmd = "ovftool -tt=VMX {} {}".format(vfile, vmx)
             run(cmd)
